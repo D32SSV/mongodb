@@ -38,7 +38,18 @@ async function listAllCollections() {
     const collection = db.collection("instatransactionschemas");
 
     const documents = await collection
-      .find({lastName:'Pandey',$and:[{fromAmount:{$lt:50}},{firstName:'Arun'}]})
+      .aggregate([
+        {
+          $project: {
+            _id:0,
+            firstName: 1,
+            lastName: 1,
+            fullname: { $concat: ["$firstName", " (.) ", "$lastName"] },
+          },
+        },
+        { $sort: { firstName: -1 } },
+        { $limit: 5 },
+      ])
       .toArray();
 
     if (documents.length > 0) {
