@@ -38,7 +38,7 @@ async function listAllCollections() {
     const collection = db.collection("instatransactionschemas");
 
     const documents = await collection
-      .find({$and:[{fromAmount:{$lt:50}},{firstName:'Arun'}]})
+      .find({lastName:'Pandey',$and:[{fromAmount:{$lt:50}},{firstName:'Arun'}]})
       .toArray();
 
     if (documents.length > 0) {
